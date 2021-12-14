@@ -1,0 +1,247 @@
+---
+title: "Estadística Contraste de Hipotesis"
+author: "Alberto Romero Jiménez"
+date: "14/12/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Conceptos básicos
+
+  * **POBLACIÓN** = conjunto de individuos que se quiere estudiar
+  * **INDIVIDUO** = pueden ser objetos (yogures, ruedas, etc.)
+  * **MUESTRA** = es un subconjunto cualquiera de la población.
+  * **VARIABLE** = es una característica de los individuos objeto de nuestro estudio. Existen varios tipos:
+    * **Variables CUALITATIVAS**: son aquellas que no se expresan numéricamente, sino como categorías o características de los individuos. A veces reciben el nombre de *variables categóricas*.
+    
+    * **Variables CUANTITATIVAS**: se expresan de forma numérica. Se dividen en dos subcategorías:
+        * **Cuantitativas DISCRETAS**: sólo toman valores enteros.
+          Ejemplo: *número de hijos de una pareja*.
+        * **Cuantitativas CONTINUAS**: pueden tomar cualquier valor en un intervalo. 
+          Ejemplo: *temperaturas en una estación*.
+        
+NOTA: en la práctica muchas variables cualitativas se codifican (se asigna un número a cada categoría) para facilitar su estudio (por ejemplo, *Tipos de ordenador de los usuarios: 1=PC, 2=MAC, 3=Otros*).
+
+
+## Frecuencias
+
+El número total de individuos de los que se disponen datos; este número se designa con **$N$**
+
+La **frecuencia ABSOLUTA** de una categoría es el número total de individuos que pertenecen a la categoría.
+
+La **frecuencia RELATIVA** de una categoría es la proporción de individuos que pertenecen a ella. Esto es útil si debemos comparar la misma variable en dos poblaciones diferentes que tienen diferente número de individuos.
+
+---
+
+## 2. Contraste de Hipótesis
+
+Un test de hipótesis se examina dos hipótesis contrapuestas sobre una población:
+
+  * **Hipótesis NULA**: es la que representa el caso en el que no hay efecto o no hay diferencia.
+  * **Hipótesis ALTERNATIVA**: es lo contrario a la hipótesis nula.
+
+Estas dos hipótesis se derivan de la pregunta de investigación. El desarrollo de un test de hipótesis se realiza por **refutación**: consiste en buscar si hay evidencia suficiente para rechazar la hipótesis nula y, por lo tanto, poder inclinarnos por la hipótesis alternativa.
+
+Un ejemplo podría ser:
+
+*Las autoridades sanitarias quieren estudiar el peso medio al nacer de los neonatos de madres de nacionalidad española en 2020. Un estudio similar se realizó hace veinte años y se determinó que el peso medio era de 3110 gramos. Se preguntan si el peso medio ha variado o se mantiene estable después de este tiempo. Para realizar este estudio con rigurosidad científica, las autoridades sanitarias contactan con el Instituto de Estadística Español (INE). El INE recoge una muestra de trescientos nacimientos a lo largo del año en diferentes hospitales del país.*
+
+##### <span style="color:red">**Pregunta 1: ¿El peso al nacer de hijos de mujeres españolas es diferente a 3.110 gramos?**</span>
+
+  * **Hipótesis NULA**: el valor medio del peso al nacer de los niños de mujeres españolas en 2020 es igual a 3.110 gramos.
+  * **Hipótesis ALTERNATIVA**: el valor medio del peso al nacer de los niños de mujeres españolas en 2020 es diferente de 3.110 gramos.
+  
+
+Una vez formuladas las hipótesis, se aplica un **test estadístico**, que es una medida de los datos de la muestra que permitirá realizar la inferencia sobre la población. El test idóneo dependerá de la distribución de los datos de dicha población. 
+
+Muchos tests asumen que la población original tiene una distribución Normal: estos tests se denominan **tests paramétricos**. Son sencillos de aplicar porque la distribución normal de los datos está muy bien caracterízada. Esto permite identificar los valores que habría que observar en la muestra para poder rechazar o confirmar la hipótesis nula y así dar respuesta a la pregunta formulada. Si los datos no siguen una distribución normal, se aplican **tests no paramétricos**, que no se basan en una asunción de una determinada distribución sobre la población.
+
+El test que se aplica acaba originando un resultado estadístico que es el **valor-p**, que se puede leer como el error que se cometería al rechazar la hipótesis nula si esta fuera cierta. Si el valor-p es muy pequeño, se rechazaría la hipótesis nula.
+
+Para resumir, estos serían los pasos principales para un contraste de hipótesis:
+
+  * 1. Formular la pregunta de investigación.
+  * 2. Recoger una muestra representativa de la población.
+  * 3. Formular la hipótesis nula y la alternativa.
+  * 4. Identificar los tests estadísticos disponibles y sus condiciones de aplicación (distribución de los datos).
+  * 5. Aplicar el test estadístico que permitirá realizar la inferencia.
+  * 6. Una vez aplicado el test, se concluye sobre el rechazo o la aceptación de la hipótesis nula.
+  * 7. Se da respuesta a la pregunta de investigación formulada.
+  
+---
+
+Supongamos que tenemos suficiente información para aceptar la hipótesis nula:
+
+*El resultado del estudio ha sido que la media de peso ha variado significativamente del valor de 3110 gramos en la población de neonatos en 2020. Imaginemos ahora que las autoridades sanitarias se preguntan si el peso de las niñas al nacer es diferente del peso de los niños. Vuelven a pedir al INE que realice esta investigación.*
+
+En este caso, se podría presentar una formulación diferente de la pregunta de investigación:
+
+##### <span style="color:red">**Pregunta 2: ¿El peso al nacer de los niños es significativamente diferente al peso de las niñas?** </span>
+
+En este caso, no se trata de investigar sobre el valor de un parámetro poblacional, sino de comparar el peso de dos poblaciones: el de los niños con el de las niñas.
+
+  * **Hipótesis NULA**: el peso medio de los niños es igual al peso medio de las niñas.
+  * **Hipótesis ALTERNATIVA**: el peso medio de los niños es diferente del peso medio de las niñas.
+
+Este tipo de contraste se llama **BILATERAL**, porque se rechaza la hipótesis nula tanto si el peso medio de los niños es suficientemente mayor que el de las niñas, como si el peso medio de los niños es suficientemente menor que el de las niñas. 
+
+---
+
+##### <span style="color:red">**Pregunta 3: ¿El peso al nacer de los niños es significativamente mayor que el peso de las niñas?**</span>
+
+Las preguntas 2 y 3 tienen una formulación ligeramente diferente; pero existe una diferencia a la hora de definir las hipótesis:
+
+  * **Hipótesis NULA**: el peso medio de los niño es igual al peso medio de las niñas.
+  * **Hipótesis ALTERNATIVA**: el peso medio de los niños es mayor que el peso medio de las niñas.
+  
+En este caso, se trata de un **contraste UNILATERAL** de dos muestras independientes sobre la media. Para poder rechazar la hipótesis nula, hay que observar un peso suficientemente mayor en los niños que en las niñas (en otro apartado se explicará cuánto se considera "*suficientemente mayor*").
+
+---
+
+##### <span style="color:red">**Pregunta 4: ¿El peso al nacer de los niños varía igual que el peso de las niñas?** </span>
+
+En este caso, nos preguntamos si el peso de las niños presenta una variabilidad similar a la de las niñas. Se trataría de un test de **dos hipótesis independientes sobre la VARIANZA**.
+
+##### <span style="color:red">**Pregunta 5: ¿La proporción de niños es igual a la proporción de niñas?**</span>
+
+Esta pregunta hace referencia a una proporción, en vez de a una media. Se trata de un **test de una muestra sobre la POBLACIÓN**.
+
+##### <span style="color:red">**Pregunta 6: La proporción de niños (de sexo masculino) nacidos en la población, ¿es la misma en España que en Francia?**</span>
+
+También hace referencia a una proporción, y se trata de un **test sobre la proporción de dos muestras independientes**.
+
+---
+
+Por último, se ilustará otro posible estudio. Las autoridades sanitarias nos preguntan si el peso de los hermanos tienen una cierta relación. En una muestra de 300 mujeres, han identificao 235 mujeres con el peso del primer hijo y el peso del segundo hijo. Se formula la siguiente pregunta:
+
+##### <span style="color:red">**Pregunta 7: ¿El peso de los neonatos hermanos difiere en más de 300 gramos?**</span>
+
+Esta investigación presenta una característica particular y es que los sujetos de las dos muestras están relacionados uno a uno. Se trata un caso de **dos muestras EMPAREJADAS**.
+
+---
+
+## 2. Intervalo de Confianza
+
+El intervalo de confianza permite inferir valores aproximados sobre el parámetro *theta* **(θ)** de una población. Se cumple que:
+
+$$P(L ≤ θ ≤ U) = 1-α$$
+  
+  * $L$: es el límite inferior del intervalo
+  * $U$: es el límite superior del intervalo
+  * $α$: nivel de significancia (se deduce del nivel de confianza establecido).
+  
+El **nivel de confianza (NC)** se suele dar en porcentaje, y son valores típicos el 90, el 95 o el 99%. 
+
+El nivel de confianza corresponde a $(1-α)*100%$.
+
+---
+
+### 2.1. IC sobre la media de la población
+
+Para ilustrar el concepto, se tomará la **Pregunta 1** anteriormente formulada de ejemplo:
+
+##### <span style="color:red">**Pregunta 1: ¿El peso al nacer de hijos de mujeres españolas es diferente a 3.110 gramos?**</span>
+
+Pasamos a estimar el valor de la media de peso al nacer de los niños con un nivel de confianza del **95%**. Asumiendo que la población sigue una **distribución normal** de media $µ$ y desviación típica $σ$, se procede a recoger los datos de una muestra aleatoria de tamaño $n$ (suficientemente grande) y se mide su media $X̄$.
+
+Se puede demostrar que la media de la muestra $X̄$ sigue una distribución normal:
+
+$$N(µ, σ/√n)$$
+
+Por lo tanto, la variable siguiente sigue una **distribución normal estándar**:
+
+$$z = X̄ - µ / (σ/√n) -- N(0,1)$$
+Para un nivel de confianza del 95%, se quiere determinar aquel intervalo $[L,U]$ tal que la probabilidad de que $z$ esté en ese intervalo sea 0,95. Es decir: `P(L ≤ z ≤ U) = 0.95`
+
+Sabiendo que $z$ sigue una distribución normal centrada en 0, con desviación estándar 1, hay que buscar el valor $L$ tal que $P(z≤L) = (1-0,95)/2 = 0,025$
+
+Este valor $L$ se puede consultar en las tablas de la distribución normal y corresponde a $-1,96$. Dado que la distribución es **simétrica**, el valor superior del intervalo es $1,96$.
+
+---
+
+**Distribución Normal**: *La distribución normal fue observada en muchos fenómenos naturales. En el siglo XVII Galileo observó que los errores de las medidas en observaciones astronómicas seguían una distribución que después se comprobó que cumplía la distribución normal. En el año 1809 Gauss desarrolló la fórmula para la distribución normal, a pesar de que también se atribuye su descubrimiento casi simultáneo a otro estadístico, Adrain. La forma de la distribución normal también se denomina campana de Gauss.*
+
+---
+
+Para utilizar la notación habitual empleada en estadística, se denominará:
+
+  * $z_α/2$ como aquel valor que satisface $P(z≤z_α/2) = α/2$
+  * $z_1-α/2$ como aquel valor que satisface $P(z≤z_1-α/2) = 1-(α/2)$
+  
+Por tanto, los umbrales $L$ y $U$ referidos anteriormente se denotarán como $z_α/2$ y $z_1-α/2$ respectivamente, de manera que se cumple la siguiente igualdad:
+
+$$P(z_α/2 ≤ X̄ - µ / (σ/√n) ≤ z_1-α/2) = 1-α$$
+
+Así pues, operando esta expresión, obtenemos que el intervalo de confianza $(1-α)$ para el parámetro $µ$ cuando muestreamos una población con distribución normal y varianza conocida $σ^2$ es:
+
+$$[\overline{X} - z_{1-α/2} * \frac{σ}{\sqrt{n}}, \overline{X} + z_{1-α/2} * \frac{σ}{\sqrt{n}})]$$
+donde $X̄$ es la muestra obtenida en la muestra, y $n$ el tamaño de esta.
+
+Como ya tenemos todas las fórmulas, sólo queda llevar a cabo la operación.
+
+##### <span style="color:red"> **Ejemplo 1: Cálculo del intervalo de confianza (IC) para la media de peso de los neonatos.**</span>
+
+*Se toma una muestra de población de n = 300 neonatos y se mide el peso medio $X̄ = 2848,98$. Asumiendo que se conoce la desviación estándar de la población $σ=610$, se calcula el intervalo de confianza del 95%.*
+
+Se aplica la última fórmula obtenida:
+
+$$[2848,98 - 1,96 * (610/√300), 2848,98 + 1,96 * (610/√300)]$$
+
+Esto quiere decir que el **intervalo de confianza del 95%** es: $[2779.95, 2918.00]$.
+
+Pasamos ahora a <span style="color:blue">**código R**</span> para realizar este cálculo. En primer lugar, para calcular los valores umbral de la distribución normal, $R$ proporciona las funciones `pnorm` y `qnorm`:
+
+```{r pnorm_qnorm, include=TRUE}
+# pnorm(q, mean = 0, sd = 1, lower.tail=TRUE, log.p = FALSE)
+
+# qnorm(p, mean = 0, sd = 1, lower.tail=TRUE, log.p = FALSE)
+```
+
+La función **`pnorm`** calcula, dado un valor $q$, la probabilidad a la izquierda $P(X≤q)=p$. Esta función es la que se usará para calcular el valor $z_{α/2}$. Estos son los valores críticos de los diferentes niveles de confianza más usuales para una distribución normal estándar:
+
+  * $90%$ -- $α=0.10$ -- $z_α/2=-1,65$ --> `qnorm(0.05)` (qnorm con α/2)
+  * $95%$ -- $α=0.05$ -- $z_α/2=-1,96$ --> `qnorm(0.025)` (qnorm con α/2)
+  * $98%$ -- $α=0.02$ -- $z_α/2=-3,09$ --> `qnorm(0.001)` (qnorm con α/2)
+
+Para calcular $z_{1-α/2}$ se tienen dos opciones:
+
+```{r qnorm_z, include=TRUE}
+qnorm(0.975)
+
+qnorm(0.025, lower.tail = FALSE)
+```
+
+El argumento `lower.tail = FALSE` permite calcular la probabilidad de la derecha. Hay que tener presente estas características, dado que es una fuente de error muy habitual cuando se programa en R. 
+
+---
+
+##### <span style="color:red"> **Ejemplo 2: Código R para el cálculo del intervalo de confianza (IC) para la media de peso de los neonatos.**</span>
+
+A continuación, se muestra el código R para calcular el intervalo de confianza del ejemplo 1. Se asume que se conoce la desviación estándar de la población ($σ=610$). Los datos están almacenados en un dataframe de nombre `ds` y este tiene un atributo `bw` con los datos del peso de los niños:
+
+```{r codigoR_ejemplo1, include=TRUE}
+alfa <- 1-0.95
+sd <- 610
+# n <- nrow(ds)
+# SE <- sd / sqrt(n)
+# z <- qnorm(alfa/2, lower.tail=FALSE)
+# L <- mean(ds$bw) - z*SE
+# U <- mean(ds$bw) + z*SE
+# round(c(L,U), 2)
+```
+
+Nos saldrá por pantalla un intervalo de confianza del 95% que sería $[2779.95, 2918.00]$ (igual que en el cálculo manual).
+
+Con este resultado, se puede dar respuesta a la pregunta 1, sobre si el peso medio de los niños al nacer es de 3.110 gramos. Se observa que este valor no se encuentra dentro del intervalo de confianza calculado, por lo tanto, se concluye con un nivel de confianza al 95% que **el valor del peso medio de los niños no es de 3.110 gramos**.
+
+
+*en construcción...*
+
+---
+
+
